@@ -1,7 +1,20 @@
 import { useState } from "react";
-import { Container, Heading, VStack, FormControl, FormLabel, Input, Button, Select, HStack } from "@chakra-ui/react";
+import { Container, Heading, VStack, FormControl, FormLabel, Input, Button, Select, HStack, Box, Text } from "@chakra-ui/react";
+
+const BookingConfirmation = ({ details }) => (
+  <Box mt={8} p={4} borderWidth="1px" borderRadius="md" width="100%">
+    <Heading as="h3" size="lg" mb={4}>Booking Confirmation</Heading>
+    <Text><strong>Booking ID:</strong> {details.bookingId}</Text>
+    <Text><strong>Departure:</strong> {details.departure}</Text>
+    <Text><strong>Arrival:</strong> {details.arrival}</Text>
+    <Text><strong>Departure Date:</strong> {details.departureDate}</Text>
+    <Text><strong>Return Date:</strong> {details.returnDate}</Text>
+    <Text><strong>Passengers:</strong> {details.passengers}</Text>
+  </Box>
+);
 
 const FlightSearch = () => {
+  const [bookingDetails, setBookingDetails] = useState(null);
   const [departure, setDeparture] = useState("");
   const [arrival, setArrival] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -10,13 +23,15 @@ const FlightSearch = () => {
 
   const handleSearch = () => {
     // Implement the search logic here
-    console.log({
+    const bookingInfo = {
       departure,
       arrival,
       departureDate,
       returnDate,
       passengers,
-    });
+      bookingId: Math.floor(Math.random() * 1000000),
+    };
+    setBookingDetails(bookingInfo);
   };
 
   return (
@@ -54,6 +69,7 @@ const FlightSearch = () => {
         <Button colorScheme="teal" size="lg" onClick={handleSearch}>
           Search Flights
         </Button>
+      {bookingDetails && <BookingConfirmation details={bookingDetails} />}
       </VStack>
     </Container>
   );
